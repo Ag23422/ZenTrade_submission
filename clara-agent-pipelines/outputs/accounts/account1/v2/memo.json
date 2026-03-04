@@ -1,0 +1,13 @@
+{
+  "business_hours": {
+    "start": "7 am",
+    "end": "6 pm"
+  },
+  "services_supported": [
+    "sprinkler"
+  ],
+  "emergency_definition": [
+    "sprinkler leak"
+  ],
+  "questions_or_unknowns": []
+}

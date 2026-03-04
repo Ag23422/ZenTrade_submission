@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Clara Agent Pipeline</title>
+<style>
+body {
+    font-family: Arial;
+    margin: 40px;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 8px;
+}
+
+pre {
+    background: #f3f3f3;
+    padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Clara AI Agent Pipeline</h2>
+
+<h3>Demo Call</h3>
+
+<input type="text" id="demo_account" placeholder="Account ID">
+
+<input type="file" id="demo_file">
+
+<button onclick="uploadDemo()">Upload Demo</button>
+
+
+<h3>Onboarding Call</h3>
+
+<input type="text" id="onboard_account" placeholder="Account ID">
+
+<input type="file" id="onboard_file">
+
+<button onclick="uploadOnboarding()">Upload Onboarding</button>
+
+
+<h3>Response</h3>
+
+<pre id="output"></pre>
+
+
+<script>
+
+const API = window.location.origin
+
+async function uploadDemo(){
+
+    let file = document.getElementById("demo_file").files[0]
+    let account = document.getElementById("demo_account").value
+
+    let form = new FormData()
+    form.append("file", file)
+    form.append("account_id", account)
+
+    let res = await fetch(API + "/demo-call",{
+        method:"POST",
+        body:form
+    })
+
+    let data = await res.json()
+
+    document.getElementById("output").innerText =
+        JSON.stringify(data,null,2)
+}
+
+async function uploadOnboarding(){
+
+    let file = document.getElementById("onboard_file").files[0]
+    let account = document.getElementById("onboard_account").value
+
+    let form = new FormData()
+    form.append("file", file)
+    form.append("account_id", account)
+
+    let res = await fetch(API + "/onboarding-call",{
+        method:"POST",
+        body:form
+    })
+
+    let data = await res.json()
+
+    document.getElementById("output").innerText =
+        JSON.stringify(data,null,2)
+}
+
+</script>
+
+</body>
+</html>

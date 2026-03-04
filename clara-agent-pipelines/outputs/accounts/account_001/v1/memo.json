@@ -1,0 +1,13 @@
+{
+  "business_hours": "monday through friday 8am to 5pm",
+  "services_supported": [
+    "sprinkler",
+    "alarm systems"
+  ],
+  "emergency_definition": [
+    "sprinkler leak",
+    "fire alarm",
+    "alarm triggered"
+  ],
+  "questions_or_unknowns": []
+}

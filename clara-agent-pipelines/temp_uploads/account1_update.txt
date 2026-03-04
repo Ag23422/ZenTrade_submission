@@ -1,0 +1,7 @@
+During onboarding we confirmed a few operational details.
+
+Business hours should actually be Monday through Friday seven am to six pm Eastern.
+
+All emergency sprinkler leak calls must go directly to the phone tree before dispatch.
+
+Also, do not create sprinkler jobs automatically in ServiceTrade.

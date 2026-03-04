@@ -1,0 +1,11 @@
+{
+  "values_changed": {
+    "root['business_hours']": {
+      "new_value": "monday through friday 7am to 6pm",
+      "old_value": "monday through friday 8am to 5pm"
+    }
+  },
+  "iterable_item_removed": {
+    "root['services_supported'][1]": "alarm systems"
+  }
+}

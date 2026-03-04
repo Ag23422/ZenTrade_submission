@@ -1,0 +1,16 @@
+{
+  "values_changed": {
+    "root['business_hours']['start']": {
+      "new_value": "7 am",
+      "old_value": "8 am"
+    },
+    "root['business_hours']['end']": {
+      "new_value": "6 pm",
+      "old_value": "5 pm"
+    }
+  },
+  "iterable_item_removed": {
+    "root['services_supported'][1]": "alarm",
+    "root['emergency_definition'][1]": "fire alarm"
+  }
+}
