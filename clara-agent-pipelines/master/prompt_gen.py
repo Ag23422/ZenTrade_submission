@@ -1,42 +1,117 @@
-def generate_prompt(memo):
+def generate_agent_spec(memo, version="v1"):
 
-    services = memo.get("services_supported", [])
-    emergencies = memo.get("emergency_definition", [])
+    company = memo.get("company_name") or "Service Company"
+
+    hours = memo.get("business_hours") or {}
+
+    address = memo.get("office_address")
+
+    emergency_triggers = memo.get("emergency_definition", [])
+
+    transfer_rules = memo.get("call_transfer_rules", {})
+
+    spec = {
+
+        "agent_name": f"{company} Dispatcher",
+
+        "voice_style": "professional calm helpful",
+
+        "version": version,
+
+        "key_variables": {
+
+            "timezone": hours.get("timezone"),
+
+            "business_hours": hours,
+
+            "office_address": address,
+
+            "emergency_triggers": emergency_triggers
+
+        },
+
+        "call_transfer_protocol": transfer_rules,
+
+        "fallback_protocol":
+        "If transfer fails collect caller name phone number and address "
+        "and assure a dispatcher will call back shortly.",
+
+        "system_prompt": build_prompt(memo)
+
+    }
+
+    return spec
+
+
+def build_prompt(memo):
+
+    company = memo.get("company_name")
+
+    services = ", ".join(memo.get("services_supported", []))
+
+    emergency = ", ".join(memo.get("emergency_definition", []))
+
+    hours = memo.get("business_hours")
+
+    address = memo.get("office_address")
+
+    constraints = ", ".join(memo.get("integration_constraints", []))
+
+    transfer = memo.get("call_transfer_rules", {})
+
+    attempts = transfer.get("attempts", 2)
+
+    timeout = transfer.get("timeout_seconds", 20)
 
     return f"""
-You are Clara, an AI voice agent.
+You are a call handling assistant for {company}.
 
-SERVICES
+COMPANY INFORMATION
+Business hours: {hours}
+Office address: {address}
+
+Services supported:
 {services}
 
-Emergency triggers
-{emergencies}
+Emergency triggers include:
+{emergency}
 
-BUSINESS HOURS FLOW
-1 greet caller
-2 ask purpose
-3 collect name and phone
-4 determine emergency
-5 transfer if needed
-6 if transfer fails apologize and notify dispatch
-7 ask if anything else needed
-8 close call
+CALL TRANSFER PROTOCOL
+- attempt transfer {attempts} times
+- wait {timeout} seconds for answer
+- if transfer fails collect caller name phone number and address
+- assure the caller dispatch will return the call shortly
+
+OFFICE HOURS FLOW
+1 greet caller politely
+2 ask purpose of call
+3 collect caller name and phone number
+4 determine emergency vs non emergency
+5 if emergency transfer to dispatch immediately
+6 if non emergency schedule service or take message
+7 confirm next steps
+8 ask if anything else is needed
+9 close call politely
 
 AFTER HOURS FLOW
-1 greet caller
-2 ask purpose
-3 confirm emergency
+1 greet caller politely
+2 determine if situation is an emergency
 
 If emergency:
-collect name phone address immediately
-attempt transfer
+- collect caller name phone number and address immediately
+- attempt transfer to dispatch
 
 If transfer fails:
-apologize and assure dispatch follow up
+- reassure caller help will arrive soon
+- confirm their phone number
 
 If non emergency:
-collect details
-confirm follow up during business hours
+- collect request details
+- inform caller the office will respond during business hours
 
-Never mention internal systems.
+CONSTRAINTS
+{constraints}
+
+Never mention internal tools or system functions to the caller.
+Only collect information necessary for routing and dispatch.
 """
