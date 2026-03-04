@@ -3,7 +3,7 @@ import whisper
 
 TRANSCRIPT_DIR = "dataset/transcripts"
 
-model = whisper.load_model("base")
+model = whisper.load_model("tiny")
 
 AUDIO_EXT = [".wav", ".mp3", ".m4a", ".flac"]
 TEXT_EXT = [".txt"]
