@@ -10,3 +10,4 @@ torch
 torchaudio
 openai-whisper
 ffmpeg-python
+deepdiff
