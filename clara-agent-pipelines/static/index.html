@@ -1,94 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Clara Agent Pipeline</title>
+
+<title>Clara AI Agent Pipeline</title>
+
 <style>
+
 body {
     font-family: Arial;
     margin: 40px;
 }
 
-input, button {
-    margin: 10px 0;
-    padding: 8px;
+textarea {
+    width: 100%;
+    height: 200px;
 }
 
 pre {
-    background: #f3f3f3;
-    padding: 15px;
+    background: #f4f4f4;
+    padding: 10px;
 }
+
+.diff {
+    background: #fff3cd;
+    padding: 10px;
+    margin-top: 20px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h2>Clara AI Agent Pipeline</h2>
+<h2>Clara Agent Demo</h2>
 
-<h3>Demo Call</h3>
+<input type="file" id="file"/>
 
-<input type="text" id="demo_account" placeholder="Account ID">
+<br><br>
 
-<input type="file" id="demo_file">
+<button onclick="demo()">Run Demo Pipeline</button>
 
-<button onclick="uploadDemo()">Upload Demo</button>
-
-
-<h3>Onboarding Call</h3>
-
-<input type="text" id="onboard_account" placeholder="Account ID">
-
-<input type="file" id="onboard_file">
-
-<button onclick="uploadOnboarding()">Upload Onboarding</button>
-
+<button onclick="onboard()">Run Onboarding Pipeline</button>
 
 <h3>Response</h3>
 
-<pre id="output"></pre>
+<pre id="result"></pre>
+
+<h3>Changes (v1 → v2)</h3>
+
+<div id="diff" class="diff"></div>
 
 
 <script>
 
-const API = window.location.origin
+async function demo() {
 
-async function uploadDemo(){
+    const fileInput = document.getElementById("file")
 
-    let file = document.getElementById("demo_file").files[0]
-    let account = document.getElementById("demo_account").value
+    const formData = new FormData()
 
-    let form = new FormData()
-    form.append("file", file)
-    form.append("account_id", account)
+    formData.append("file", fileInput.files[0])
 
-    let res = await fetch(API + "/demo-call",{
-        method:"POST",
-        body:form
+    const res = await fetch("/demo-call", {
+
+        method: "POST",
+        body: formData
+
     })
 
-    let data = await res.json()
+    const data = await res.json()
 
-    document.getElementById("output").innerText =
-        JSON.stringify(data,null,2)
+    document.getElementById("result").textContent =
+        JSON.stringify(data, null, 2)
+
+    document.getElementById("diff").textContent = ""
 }
 
-async function uploadOnboarding(){
 
-    let file = document.getElementById("onboard_file").files[0]
-    let account = document.getElementById("onboard_account").value
+async function onboard() {
 
-    let form = new FormData()
-    form.append("file", file)
-    form.append("account_id", account)
+    const fileInput = document.getElementById("file")
 
-    let res = await fetch(API + "/onboarding-call",{
-        method:"POST",
-        body:form
+    const formData = new FormData()
+
+    formData.append("file", fileInput.files[0])
+
+    const res = await fetch("/onboarding-call", {
+
+        method: "POST",
+        body: formData
+
     })
 
-    let data = await res.json()
+    const data = await res.json()
 
-    document.getElementById("output").innerText =
-        JSON.stringify(data,null,2)
+    document.getElementById("result").textContent =
+        JSON.stringify(data, null, 2)
+
+    if (data.changes) {
+
+        document.getElementById("diff").textContent =
+            JSON.stringify(data.changes, null, 2)
+
+    } else {
+
+        document.getElementById("diff").textContent =
+            "No changes detected"
+
+    }
 }
 
 </script>
