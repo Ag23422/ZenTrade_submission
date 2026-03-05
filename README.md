@@ -338,6 +338,45 @@ Potential production improvements:
 - automated Retell API integration
 
 ---
+Running with Docker (Linux / Mac / Windows)
+
+Install Docker Desktop:
+
+https://www.docker.com/products/docker-desktop/
+
+Clone the repository:
+
+git clone https://github.com/Ag23422/ZenTrade_submission.git
+cd ZenTrade_submission
+
+Build the Docker image:
+
+docker build -t clara-agent .
+
+Run the container:
+
+docker run -p 8000:8000 clara-agent
+
+Open in browser:
+
+http://localhost:8000
+
+API documentation:
+
+http://localhost:8000/docs
+Windows PowerShell Example
+git clone https://github.com/Ag23422/ZenTrade_submission.git
+cd ZenTrade_submission
+
+docker build -t clara-agent .
+
+docker run -p 8000:8000 clara-agent
+
+Then open:
+
+http://localhost:8000
+
+-------------
 
 # Summary
 
