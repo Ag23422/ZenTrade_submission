@@ -1,13 +1,8 @@
 import json
 from deepdiff import DeepDiff
 
+def generate_diff(v1, v2):
 
-def generate_diff(v1_path, v2_path):
+    diff = DeepDiff(v1, v2, ignore_order=True)
 
-    with open(v1_path) as f:
-        v1 = json.load(f)
-
-    with open(v2_path) as f:
-        v2 = json.load(f)
-
-    return DeepDiff(v1, v2)
+    return diff
