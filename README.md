@@ -1,6 +1,12 @@
 # Clara AI Agent Pipeline
 
-**Demo Video:** <ADD VIDEO LINK HERE>
+Live Deployment:
+
+UI Interface  
+https://zentrade-submission.onrender.com
+
+API Endpoints (Swagger Docs)  
+https://zentrade-submission.onrender.com/docs
 
 This project implements an automated pipeline that converts **demo and onboarding call recordings/transcripts** into structured operational configurations for AI voice agents.
 
@@ -240,26 +246,39 @@ or API docs:
 
 http://localhost:8000/docs
 
+---
+
+# Running with Docker
+
+Build container:
+
+
+docker build -t clara-agent .
+
+
+Run container:
+
+
+docker run -p 8000:8000 clara-agent
+
 
 ---
 
 # Batch Dataset Processing
 
-The batch runner processes all demo and onboarding calls automatically.
-
-Run:
+Run the dataset pipeline:
 
 
 python scripts/run_dataset.py
 
 
-This executes the full pipeline for every file in the dataset directory.
+This automatically processes all demo and onboarding files.
 
 ---
 
 # Output Structure
 
-Generated outputs are stored under:
+Generated outputs are stored in:
 
 
 outputs/accounts/<account_id>/
@@ -285,35 +304,35 @@ changes.json
 
 # Retell Setup
 
-To create an agent manually in Retell:
+To configure an agent in Retell:
 
-1. Copy the generated `agent_spec.json`
+1. Copy generated `agent_spec.json`
 2. Paste the `system_prompt` into the Retell agent configuration
-3. Set key variables (hours, address, routing rules)
-4. Configure call transfer protocol
+3. Set key operational variables
+4. Configure call transfer rules
 
 ---
 
 # LLM Usage
 
-This implementation uses **rule-based extraction**, ensuring **zero-cost operation** without relying on paid LLM APIs.
+This implementation uses rule-based extraction to ensure zero-cost operation without relying on paid LLM APIs.
 
 ---
 
 # Known Limitations
 
 - Rule-based extraction may miss unusual phrasing
-- Address detection uses regex patterns
-- Audio transcription quality depends on recording clarity
+- Address extraction uses regex patterns
+- Audio transcription accuracy depends on recording quality
 
 ---
 
 # Future Improvements
 
-If production access were available, the system could be extended with:
+Potential production improvements:
 
-- LLM-assisted semantic extraction
-- n8n orchestration workflow
+- LLM-assisted extraction
+- n8n orchestration pipeline
 - improved entity recognition
 - richer UI dashboard
 - automated Retell API integration
@@ -322,7 +341,7 @@ If production access were available, the system could be extended with:
 
 # Summary
 
-This project demonstrates a modular and automated pipeline for transforming customer call recordings into structured operational configurations for AI voice agents.
+This project demonstrates a modular and automated pipeline for converting customer calls into structured operational configurations for AI voice agents.
 
 The system is designed to be:
 
